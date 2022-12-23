@@ -1,4 +1,4 @@
-import random
+from random import randint
 
 
 def new_game():
@@ -10,7 +10,7 @@ def new_game():
     while True:
         user_name = input("Please enter your name: \n")
         print("-" * 35)
-        board_size = input(f"{user_name} please select a board size between 5-10: \n")
+        board_size = int(input(f"{user_name} please select a board size between 5-10: \n"))
         if validate_board_size(board_size) is True:
             print("-" * 35)
             return board_size
@@ -23,7 +23,7 @@ def number_of_ships():
     Let user select how many ships they would like to play with between 4-8
     """
     while True:
-        number_of_ships = input("Please select how many ships in the game between 4-8: \n")
+        number_of_ships = int(input("Please select how many ships in the game between 4-8: \n"))
         if validate_number_of_ships(number_of_ships) is True:
             print("-" * 35)
             return number_of_ships
@@ -64,7 +64,7 @@ def create_board(board_size):
     Create the board using the size the user selected.
     Create a list and place O for each space
     """
-    return [["O" for count in range(int(board_size))] for count in range(int(board_size))]
+    return [["O" for count in range(board_size)] for count in range(board_size)]
 
 
 def print_board(board):
@@ -76,7 +76,17 @@ def print_board(board):
         print(*b)
 
 
-def add_ships(ships):
+def random_row(size):
+    return randint(0, size - 1)
+
+
+def random_column(size):
+    return randint(0, size - 1)
+
+
+def print_ship(board, row, col):
+    board[row][col] = "X"
+    return
 
 
 def main():
@@ -87,8 +97,11 @@ def main():
     create_board(data)
     board = create_board(data)
     ships = number_of_ships()
-    add_ships(ships)
+    ship_row = random_row(data)
+    ship_col = random_column(data)
     print_board(board)
-
+    print_ship(board, ship_row, ship_col)
+    print(print_ship)
+    
 
 main()
