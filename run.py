@@ -85,8 +85,9 @@ def random_column(size):
 
 
 def print_ship(board, row, col):
-    board[row][col] = "X"
-    return
+    board[row][col] = "X" 
+    for b in board:
+        print(*b)
 
 
 def main():
@@ -96,10 +97,10 @@ def main():
     data = new_game()
     create_board(data)
     board = create_board(data)
-    ships = number_of_ships()
+    #ships = number_of_ships()
     ship_row = random_row(data)
     ship_col = random_column(data)
-    print_board(board)
+    #print_board(board)
     print_ship(board, ship_row, ship_col)
     print(print_ship)
     
