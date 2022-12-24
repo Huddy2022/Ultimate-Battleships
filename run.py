@@ -76,22 +76,20 @@ def print_board(board):
         print(*b)
 
 
-def random_row(size, ships, board):
+def random_ships(size, ships, board):
     for ship in range(ships):
         ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
         board[ship_row][ship_column] = "X"
-        for b in board:
-            print(*b)
+    return ship
+        
 
 
 
-def random_column(size):
+#def random_column(size):
     return randint(0, size - 1)
 
 
-def print_ship(board, row, col, ships):
-    for ship in range(ships):
-        board[row][col] = "X" 
+def print_ship(board, ships):
     for b in board:
         print(*b)
 
@@ -104,10 +102,10 @@ def main():
     create_board(data)
     board = create_board(data)
     ships = number_of_ships()
-    ship_row = random_row(data, ships, board)
+    random_ship = random_ships(data, ships, board)
     #ship_col = random_column(data)
     #print_board(board)
-    #print_ship(board, ship_row, ship_col, ships)
+    print_ship(board, random_ship)
     
 
 main()
