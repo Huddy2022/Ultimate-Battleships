@@ -69,7 +69,8 @@ def create_board(board_size):
 
 def print_board(board):
     """
-    Print the board using the create_board function and 
+    Print the board using the create_board function and
+    the randome_ships function. 
     print the list elements in single lines with space
     """
     for b in board:
@@ -81,17 +82,6 @@ def random_ships(size, ships, board):
         ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
         board[ship_row][ship_column] = "X"
     return ship
-        
-
-
-
-#def random_column(size):
-    return randint(0, size - 1)
-
-
-def print_ship(board, ships):
-    for b in board:
-        print(*b)
 
 
 def main():
@@ -102,10 +92,8 @@ def main():
     create_board(data)
     board = create_board(data)
     ships = number_of_ships()
-    random_ship = random_ships(data, ships, board)
-    #ship_col = random_column(data)
-    #print_board(board)
-    print_ship(board, random_ship)
+    random_ships(data, ships, board)
+    print_board(board)
     
 
 main()
