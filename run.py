@@ -87,10 +87,20 @@ def random_ships(size, ships, board):
 
 
 def guess(size):
-    row = input(f"Please enter a ship row between 1 and {size}")
-    while row not in f"1 - {size}":
-        print("PLEASE ENTER A VALID ROW!")
-        row = input(f"Please enter a ship row between 1 and {size}")
+    while True:
+        row = input(f"Please enter a ship row between 1 and {size}:\n")
+        if validate_guess_row(row, size) is True:
+            print("-" * 35)
+
+
+def validate_guess_row(value, size):
+    try:
+        if not (1 <= int(value) <= size):
+            print("PLEASE ENTER A VALID ROW!")
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+    return True
 
 
 def main():
