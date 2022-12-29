@@ -99,7 +99,7 @@ def guess(size):
             print("-" * 35)
         else:
             row = input(f"Please enter a ship row between 1 and {size}:\n")
-        return int(row), int(column)
+        return int(row) - 1, int(column) - 1
 
 
 def validate_guess_row(value, size):
