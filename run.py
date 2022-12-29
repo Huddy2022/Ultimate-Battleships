@@ -78,17 +78,11 @@ def print_board(board):
 
 
 def random_ships(size, ships, board):
-    board_rows = []
-    board_columns = []
     for ship in range(ships):
-        valid_placement = False
-        while not valid_placement:
+        ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
+        while board[ship_row][ship_column] == "X":
             ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
-            if ship_row not in board_rows and ship_column not in board_columns:
-                board[ship_row][ship_column] = "X"
-                board_rows.append(ship_row)
-                board_columns.append(ship_column)
-                valid_placement = True
+        board[ship_row][ship_column] = "X"
     return ship
 
 
