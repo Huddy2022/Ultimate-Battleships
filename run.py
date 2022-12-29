@@ -86,6 +86,13 @@ def random_ships(size, ships, board):
     return ship
 
 
+def guess(size):
+    row = input(f"Please enter a ship row between 1 and {size}")
+    while row not in f"1 - {size}":
+        print("PLEASE ENTER A VALID ROW!")
+        row = input(f"Please enter a ship row between 1 and {size}")
+
+
 def main():
     """
     Main function to run the game
@@ -96,6 +103,7 @@ def main():
     ships = number_of_ships()
     random_ships(data, ships, board)
     print_board(board)
+    guess(data)
     
 
 main()
