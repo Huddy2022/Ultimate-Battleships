@@ -75,6 +75,7 @@ def print_board(board):
     """
     for b in board:
         print(*b)
+    return
 
 
 def random_ships(size, ships, board):
@@ -91,6 +92,14 @@ def guess(size):
         row = input(f"Please enter a ship row between 1 and {size}:\n")
         if validate_guess_row(row, size) is True:
             print("-" * 35)
+        else:
+            row = input(f"Please enter a ship row between 1 and {size}:\n")
+        column = input(f"Please enter a ship column between 1 and {size}:\n")
+        if validate_guess_row(column, size) is True:
+            print("-" * 35)
+        else:
+            row = input(f"Please enter a ship row between 1 and {size}:\n")
+        return int(row), int(column)
 
 
 def validate_guess_row(value, size):
@@ -103,6 +112,14 @@ def validate_guess_row(value, size):
     return True
 
 
+def game(board, data):
+    row, column = guess(data)
+    if board[row][column] == "X":
+        print("YOU SUNK MY BATTLESHIP")
+    elif board[row][column] == "O":
+        print("Sorry, you missed!")
+
+
 def main():
     """
     Main function to run the game
@@ -113,7 +130,7 @@ def main():
     ships = number_of_ships()
     random_ships(data, ships, board)
     print_board(board)
-    guess(data)
-    
+    game(board, data)
+        
 
 main()
