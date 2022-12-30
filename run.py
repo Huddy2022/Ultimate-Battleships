@@ -3,6 +3,7 @@ from random import randint
 
 def new_game():
     print("Welcome to Ultimate Battleships\n")
+    print("-" * 35)
     user_name = input("Please enter your name: \n")
     print("-" * 35)
     return user_name
@@ -63,20 +64,28 @@ def validate_number_of_ships(value):
     return True
 
 
-def create_board(board_size):
+def create_board(size):
     """
     Create the board using the size the user selected.
     Create a list and place O for each space
     """
-    return [["O" for count in range(board_size)] for count in range(board_size)]
+    return [["O" for count in range(size)] for count in range(size)]
 
 
-def print_board(board):
+def players_board(board, name):
     """
     Print the board using the create_board function and
     the randome_ships function. 
     print the list elements in single lines with space
     """
+    print(f"{name}'s Board:")
+    for b in board:
+        print(*b)
+    return
+
+
+def computers_board(board):
+    print("Computers Board:")
     for b in board:
         print(*b)
     return
@@ -116,7 +125,7 @@ def validate_guess_row(value, size):
     return True
 
 
-def game(board, data, ships):
+def game(board, data, ships, name):
     row, column = guess(data)
     if board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP")
@@ -125,14 +134,14 @@ def game(board, data, ships):
             print("GAME OVER")
             main()
         else:
-            print_board(board)
-            game(board, data, ships)
+            players_board(board, name)
+            game(board, data, ships, name)
     elif board[row][column] == "O":
         print("Sorry, you missed!")
         board[row][column] = "-"
         count_hits(board)
-        print_board(board)
-        game(board, data, ships)
+        players_board(board, name)
+        game(board, data, ships, name)
         
 
 def count_hits(board):
@@ -151,11 +160,14 @@ def main():
     name = new_game()
     data = board_size(name)
     create_board(data)
-    board = create_board(data)
+    player_board = create_board(data)
+    computer_board = create_board(data)
     ships = number_of_ships(name)
-    random_ships(data, ships, board)
-    print_board(board)
-    game(board, data, ships)
+    random_ships(data, ships, player_board)
+    random_ships(data, ships, computer_board)
+    players_board(player_board, name)
+    computers_board(computer_board)
+    game(player_board, data, ships, name)
         
 
 main()
