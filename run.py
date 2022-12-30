@@ -81,9 +81,9 @@ def print_board(board):
 def random_ships(size, ships, board):
     for ship in range(ships):
         ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
-        while board[ship_row][ship_column] == "X":
+        while board[ship_row][ship_column] == "@":
             ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
-        board[ship_row][ship_column] = "X"
+        board[ship_row][ship_column] = "@"
     return ship
 
 
@@ -114,10 +114,16 @@ def validate_guess_row(value, size):
 
 def game(board, data):
     row, column = guess(data)
-    if board[row][column] == "X":
+    if board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP")
+        board[row][column] = "X"
+        print_board(board)
+        game(board, data)
     elif board[row][column] == "O":
         print("Sorry, you missed!")
+        board[row][column] = "-"
+        print_board(board)
+        game(board, data)
 
 
 def main():
