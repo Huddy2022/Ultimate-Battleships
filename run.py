@@ -112,18 +112,28 @@ def validate_guess_row(value, size):
     return True
 
 
-def game(board, data):
+def game(board, data, ships):
     row, column = guess(data)
     if board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP")
         board[row][column] = "X"
         print_board(board)
-        game(board, data)
     elif board[row][column] == "O":
         print("Sorry, you missed!")
         board[row][column] = "-"
-        print_board(board)
-        game(board, data)
+    else:
+        if count_hits(board) == ships:
+            print("GAME OVER")
+            main()
+
+
+def count_hits(board):
+    count = 0
+    for row in board:
+        for column in row:
+            if column == "X":
+                count += 1
+    return count
 
 
 def main():
@@ -136,7 +146,7 @@ def main():
     ships = number_of_ships()
     random_ships(data, ships, board)
     print_board(board)
-    game(board, data)
+    game(board, data, ships)
         
 
 main()
