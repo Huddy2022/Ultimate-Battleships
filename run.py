@@ -117,15 +117,19 @@ def game(board, data, ships):
     if board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP")
         board[row][column] = "X"
-        print_board(board)
-    elif board[row][column] == "O":
-        print("Sorry, you missed!")
-        board[row][column] = "-"
-    else:
         if count_hits(board) == ships:
             print("GAME OVER")
             main()
-
+        else:
+            print_board(board)
+            game(board, data, ships)
+    elif board[row][column] == "O":
+        print("Sorry, you missed!")
+        board[row][column] = "-"
+        count_hits(board)
+        print_board(board)
+        game(board, data, ships)
+        
 
 def count_hits(board):
     count = 0
