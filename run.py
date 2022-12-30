@@ -100,7 +100,7 @@ def random_ships(size, ships, board):
     return ship
 
 
-def guess(size):
+def players_guess(size):
     while True:
         row = input(f"Please enter a ship row between 1 and {size}:\n")
         if validate_guess_row(row, size) is True:
@@ -125,23 +125,25 @@ def validate_guess_row(value, size):
     return True
 
 
-def game(board, data, ships, name):
-    row, column = guess(data)
-    if board[row][column] == "@":
+def game(player_board, computer_board, data, ships, name):
+    row, column = players_guess(data)
+    if computer_board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP")
-        board[row][column] = "X"
-        if count_hits(board) == ships:
+        computer_board[row][column] = "X"
+        if count_hits(computer_board) == ships:
             print("GAME OVER")
             main()
         else:
-            players_board(board, name)
-            game(board, data, ships, name)
-    elif board[row][column] == "O":
+            players_board(player_board, name)
+            computers_board(computer_board)
+            game(player_board, computer_board, data, ships, name)
+    elif computer_board[row][column] == "O":
         print("Sorry, you missed!")
-        board[row][column] = "-"
-        count_hits(board)
-        players_board(board, name)
-        game(board, data, ships, name)
+        computer_board[row][column] = "-"
+        count_hits(computer_board)
+        players_board(player_board, name)
+        computers_board(computer_board)
+        game(player_board, computer_board, data, ships, name)
         
 
 def count_hits(board):
@@ -167,7 +169,7 @@ def main():
     random_ships(data, ships, computer_board)
     players_board(player_board, name)
     computers_board(computer_board)
-    game(player_board, data, ships, name)
+    game(player_board, computer_board, data, ships, name)
         
 
 main()
