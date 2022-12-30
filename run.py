@@ -2,15 +2,19 @@ from random import randint
 
 
 def new_game():
+    print("Welcome to Ultimate Battleships\n")
+    user_name = input("Please enter your name: \n")
+    print("-" * 35)
+    return user_name
+
+
+def board_size(name):
     """
     Start a new game and get users name, board size and number of ships
     they want to use in the game
     """
-    print("Welcome to Ultimate Battleships")
     while True:
-        user_name = input("Please enter your name: \n")
-        print("-" * 35)
-        board_size = int(input(f"{user_name} please select a board size between 5-10: \n"))
+        board_size = int(input(f"{name} please select a board size between 5-10: \n"))
         if validate_board_size(board_size) is True:
             print("-" * 35)
             return board_size
@@ -18,12 +22,12 @@ def new_game():
             return False
 
 
-def number_of_ships():
+def number_of_ships(name):
     """
     Let user select how many ships they would like to play with between 4-8
     """
     while True:
-        number_of_ships = int(input("Please select how many ships in the game between 4-8: \n"))
+        number_of_ships = int(input(f"{name} Please select how many ships in the game between 4-8: \n"))
         if validate_number_of_ships(number_of_ships) is True:
             print("-" * 35)
             return number_of_ships
@@ -144,10 +148,11 @@ def main():
     """
     Main function to run the game
     """
-    data = new_game()
+    name = new_game()
+    data = board_size(name)
     create_board(data)
     board = create_board(data)
-    ships = number_of_ships()
+    ships = number_of_ships(name)
     random_ships(data, ships, board)
     print_board(board)
     game(board, data, ships)
