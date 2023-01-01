@@ -126,9 +126,9 @@ def validate_guess(value, size):
     return True
 
 
-def computers_guess(size, player_board):
+def computers_guess(size, board):
     row, column = randint(0, size - 1), randint(0, size - 1)
-    while player_board[row][column] == "X" or "-":
+    while board[row][column] == "X" or board[row][column] == "-":
         row, column = randint(0, size - 1), randint(0, size - 1)
     return row, column
 
