@@ -103,19 +103,19 @@ def random_ships(size, ships, board):
 def players_guess(size):
     while True:
         row = input(f"Please enter a ship row between 1 and {size}:\n")
-        if validate_guess_row(row, size) is True:
+        if validate_guess(row, size) is True:
             print("-" * 35)
         else:
             row = input(f"Please enter a ship row between 1 and {size}:\n")
         column = input(f"Please enter a ship column between 1 and {size}:\n")
-        if validate_guess_row(column, size) is True:
+        if validate_guess(column, size) is True:
             print("-" * 35)
         else:
-            row = input(f"Please enter a ship row between 1 and {size}:\n")
+            row = input(f"Please enter a ship column between 1 and {size}:\n")
         return int(row) - 1, int(column) - 1
 
 
-def validate_guess_row(value, size):
+def validate_guess(value, size):
     try:
         if not (1 <= int(value) <= size):
             print("PLEASE ENTER A VALID ROW!")
