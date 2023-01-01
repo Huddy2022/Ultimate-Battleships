@@ -15,12 +15,17 @@ def board_size(name):
     they want to use in the game
     """
     while True:
-        board_size = int(input(f"{name} please select a board size between 5-10: \n"))
-        if validate_board_size(board_size) is True:
-            print("-" * 35)
-            return board_size
-        else:
-            return False
+        try:
+            board_size = int(input(f"{name} please select a board size between 5-10: \n"))
+            if not (5 <= int(board_size) <= 10):
+                print(f"Please provide a number between 5-10, you provided {board_size}")
+                print("-" * 35)
+                continue
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+            continue
+        print("-" * 35)
+        return board_size
 
 
 def number_of_ships(name):
@@ -34,20 +39,6 @@ def number_of_ships(name):
             return number_of_ships
         else:
             return False
-
-
-def validate_board_size(value):
-    """
-    Inside the try it checks the users value is between 5 - 10
-    and raises a ValueError if a string is used rather and than integer
-    """
-    try:
-        if not (5 <= int(value) <= 10):
-            raise ValueError(f"Please provide a number between 5-10, you provided {value}")
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
-    return True
 
 
 def validate_number_of_ships(value):
