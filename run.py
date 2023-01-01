@@ -84,7 +84,7 @@ def random_ships(size, ships, board):
     return ship
 
 
-def players_guess(size, board):
+def players_guess(size):
     while True:
         try:
             print("-" * 35)
@@ -101,9 +101,6 @@ def players_guess(size, board):
             if not (1 <= int(column) <= size):
                 print("PLEASE ENTER A VALID ROW!")
                 continue
-            elif board[row][column] == "X" or board[row][column] == "-":
-                print("You already picked those coordinates try again")
-                continue
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
             continue
@@ -119,9 +116,12 @@ def computers_guess(size, board):
 
 
 def game(player_board, computer_board, data, ships, name):
-    row, column = players_guess(data, computer_board)
+    row, column = players_guess(data)
     comp_row, comp_col = computers_guess(data, player_board)
-    if computer_board[row][column] == "@":
+    if computer_board[row][column] == "X" or computer_board[row][column] == "-":
+        print("You already picked those coordinates try again")
+        game(player_board, computer_board, data, ships, name)
+    elif computer_board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP!")
         print("-" * 35)
         computer_board[row][column] = "X"
