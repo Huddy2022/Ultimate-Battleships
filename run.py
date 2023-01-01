@@ -17,7 +17,7 @@ def board_size(name):
     while True:
         try:
             board_size = int(input(f"{name} please select a board size between 5-10: \n"))
-            if not (5 <= int(board_size) <= 10):
+            if not (5 <= (board_size) <= 10):
                 print(f"Please provide a number between 5-10, you provided {board_size}")
                 print("-" * 35)
                 continue
@@ -36,7 +36,7 @@ def number_of_ships(name):
     while True:
         try:
             number_of_ships = int(input(f"{name} Please select how many ships in the game between 4-8: \n"))
-            if not (4 <= int(number_of_ships) <= 8):
+            if not (4 <= (number_of_ships) <= 8):
                 print(f"Please provide a number between 4-8, you provided {number_of_ships}")
                 print("-" * 35)
                 continue
@@ -86,28 +86,25 @@ def random_ships(size, ships, board):
 
 def players_guess(size):
     while True:
-        row = input(f"Please enter a ship row between 1 and {size}:\n")
-        if validate_guess(row, size) is True:
-            print("-" * 35)
-        elif validate_guess(row, size) is False:
-            row = input(f"Please enter a ship row between 1 and {size}:\n")
-        column = input(f"Please enter a ship column between 1 and {size}:\n")
-        if validate_guess(column, size) is True:
-            print("-" * 35)
-        elif validate_guess(column, size) is False:
-            column = input(f"Please enter a ship column between 1 and {size}:\n")
+        try:
+            row = int(input(f"Guess a row between 1 and {size}:\n"))
+            if not (1 <= (row) <= size):
+                print("PLEASE ENTER A VALID ROW!")
+                continue
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+            continue
+        print("-" * 35)
+        try:
+            column = int(input(f"Guess a column between 1 and {size}:\n"))
+            if not (1 <= int(column) <= size):
+                print("PLEASE ENTER A VALID ROW!")
+                continue
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+            continue
+        print("-" * 35)
         return int(row) - 1, int(column) - 1
-
-
-def validate_guess(value, size):
-    try:
-        if not (1 <= int(value) <= size):
-            print("PLEASE ENTER A VALID ROW!")
-            return False
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
-    return True
 
 
 def computers_guess(size, board):
@@ -178,11 +175,12 @@ def main():
     ships = number_of_ships(name)
     random_ships(data, ships, player_board)
     random_ships(data, ships, computer_board)
-    players_board(player_board, name)
-    computers_board(computer_board)
     print("-" * 35)
     print("LETS BEGIN!!!")
     print("TOP LEFT CORNER IS ROW:1, COL:1")
+    print("-" * 35)
+    players_board(player_board, name)
+    computers_board(computer_board)
     print("-" * 35)
     game(player_board, computer_board, data, ships, name)
         
