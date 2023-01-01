@@ -135,24 +135,34 @@ def game(player_board, computer_board, data, ships, name):
     row, column = players_guess(data)
     comp_row, comp_col = computers_guess(data)
     if computer_board[row][column] == "@":
-        print("YOU SUNK MY BATTLESHIP")
+        print("YOU SUNK MY BATTLESHIP!")
         computer_board[row][column] = "X"
-        player_board[comp_row][comp_col] = "T"
-        if count_hits(computer_board) == ships:
-            print("GAME OVER")
-            main()
-        else:
-            players_board(player_board, name)
-            computers_board(computer_board)
-            game(player_board, computer_board, data, ships, name)
+        if player_board[comp_row][comp_col] == "@":
+            print("COMPUTER HIT YOU'RE SHIP!")
+            player_board[comp_row][comp_col] = "X"
+            if count_hits(computer_board) == ships:
+                print("GAME OVER")
+                main()
+        elif player_board[comp_row][comp_col] == "O":
+            player_board[comp_row][comp_col] = "-"
+            if count_hits(computer_board) == ships:
+                print("GAME OVER")
+                main()
     elif computer_board[row][column] == "O":
         print("Sorry, you missed!")
         computer_board[row][column] = "-"
-        player_board[comp_row][comp_col] = "T"
-        count_hits(computer_board)
-        players_board(player_board, name)
-        computers_board(computer_board)
-        game(player_board, computer_board, data, ships, name)
+        if player_board[comp_row][comp_col] == "@":
+            print("COMPUTER HIT YOU'RE SHIP!")
+            player_board[comp_row][comp_col] = "X"
+            if count_hits(player_board) == ships:
+                print("GAME OVER")
+                main()
+        elif player_board[comp_row][comp_col] == "O":
+            player_board[comp_row][comp_col] = "-"
+    
+    players_board(player_board, name)
+    computers_board(computer_board)
+    game(player_board, computer_board, data, ships, name)
         
 
 def count_hits(board):
