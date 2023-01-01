@@ -154,7 +154,6 @@ def game(player_board, computer_board, hidden_board, data, ships, name):
         elif player_board[comp_row][comp_col] == "O":
             player_board[comp_row][comp_col] = "-"    
     players_board(player_board, name)
-    computers_board(computer_board)
     computers_board(hidden_board)
     game(player_board, computer_board, hidden_board, data, ships, name)
         
@@ -192,7 +191,6 @@ def main():
     print("TOP LEFT CORNER IS ROW:1, COL:1")
     print("-" * 35)
     players_board(player_board, name)
-    computers_board(computer_board)
     computers_board(hidden_board)
     game(player_board, computer_board, hidden_board, data, ships, name)
         
