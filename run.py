@@ -105,13 +105,13 @@ def players_guess(size):
         row = input(f"Please enter a ship row between 1 and {size}:\n")
         if validate_guess(row, size) is True:
             print("-" * 35)
-        else:
+        elif validate_guess(row, size) is False:
             row = input(f"Please enter a ship row between 1 and {size}:\n")
         column = input(f"Please enter a ship column between 1 and {size}:\n")
         if validate_guess(column, size) is True:
             print("-" * 35)
-        else:
-            row = input(f"Please enter a ship column between 1 and {size}:\n")
+        elif validate_guess(column, size) is False:
+            column = input(f"Please enter a ship column between 1 and {size}:\n")
         return int(row) - 1, int(column) - 1
 
 
@@ -119,17 +119,25 @@ def validate_guess(value, size):
     try:
         if not (1 <= int(value) <= size):
             print("PLEASE ENTER A VALID ROW!")
+            return False
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
     return True
 
 
+def computers_guess(size):
+    row, column = randint(0, size - 1), randint(0, size - 1)
+    return row, column
+
+
 def game(player_board, computer_board, data, ships, name):
     row, column = players_guess(data)
+    comp_row, comp_col = computers_guess(data)
     if computer_board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP")
         computer_board[row][column] = "X"
+        player_board[comp_row][comp_col] = "T"
         if count_hits(computer_board) == ships:
             print("GAME OVER")
             main()
@@ -140,6 +148,7 @@ def game(player_board, computer_board, data, ships, name):
     elif computer_board[row][column] == "O":
         print("Sorry, you missed!")
         computer_board[row][column] = "-"
+        player_board[comp_row][comp_col] = "T"
         count_hits(computer_board)
         players_board(player_board, name)
         computers_board(computer_board)
