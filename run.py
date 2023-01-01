@@ -21,8 +21,8 @@ def board_size(name):
                 print(f"Please provide a number between 5-10, you provided {board_size}")
                 print("-" * 35)
                 continue
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+        except ValueError:
+            print("YOU MUST ENTER A NUMBER")
             print("-" * 35)
             continue
         print("-" * 35)
@@ -40,8 +40,8 @@ def number_of_ships(name):
                 print(f"Please provide a number between 4-8, you provided {number_of_ships}")
                 print("-" * 35)
                 continue
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+        except ValueError:
+            print("PLEASE ENTER A NUMBER")
             print("-" * 35)
             continue 
         print("-" * 35)
@@ -92,8 +92,8 @@ def players_guess(size):
             if not (1 <= (row) <= size):
                 print("PLEASE ENTER A VALID ROW!")
                 continue
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+        except ValueError:
+            print("PLEASE ENTER A NUMBER")
             continue
         print("-" * 35)
         try:
@@ -101,8 +101,8 @@ def players_guess(size):
             if not (1 <= int(column) <= size):
                 print("PLEASE ENTER A VALID ROW!")
                 continue
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+        except ValueError:
+            print("PLEASE ENTER A NUMBER")
             continue
         print("-" * 35)
         return (row) - 1, (column) - 1
@@ -115,20 +115,20 @@ def computers_guess(size, board):
     return row, column
 
 
-def game(player_board, computer_board, data, ships, name):
+def game(player_board, computer_board, hidden_board, data, ships, name):
     row, column = players_guess(data)
     comp_row, comp_col = computers_guess(data, player_board)
-    if computer_board[row][column] == "X" or computer_board[row][column] == "-":
+    if hidden_board[row][column] == "X" or hidden_board[row][column] == "-":
         print("You already picked those coordinates try again")
-        game(player_board, computer_board, data, ships, name)
+        game(player_board, computer_board, hidden_board, data, ships, name)
     elif computer_board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP!")
         print("-" * 35)
-        computer_board[row][column] = "X"
-        if count_hits(computer_board) == ships:
-            print("YOU WIN")
+        hidden_board[row][column] = "X"
+        if count_hits(hidden_board) == ships:
+            print("YOU WIN, CONGRATULATIONS")
             print("-" * 35)
-            main()
+            end_game()
         elif player_board[comp_row][comp_col] == "@":
             print("COMPUTER HIT YOU'RE SHIP!")
             print("-" * 35)
@@ -136,13 +136,13 @@ def game(player_board, computer_board, data, ships, name):
             if count_hits(player_board) == ships:
                 print("GAME OVER YOU LOSE")
                 print("-" * 35)
-                main()
+                end_game()
         elif player_board[comp_row][comp_col] == "O":
             player_board[comp_row][comp_col] = "-"
     elif computer_board[row][column] == "O":
         print("Sorry, you missed!")
         print("-" * 35)
-        computer_board[row][column] = "-"
+        hidden_board[row][column] = "-"
         if player_board[comp_row][comp_col] == "@":
             print("COMPUTER HIT YOU'RE SHIP!")
             print("-" * 35)
@@ -150,12 +150,13 @@ def game(player_board, computer_board, data, ships, name):
             if count_hits(player_board) == ships:
                 print("GAME OVER YOU LOSE")
                 print("-" * 35)
-                main()
+                end_game()
         elif player_board[comp_row][comp_col] == "O":
             player_board[comp_row][comp_col] = "-"    
     players_board(player_board, name)
     computers_board(computer_board)
-    game(player_board, computer_board, data, ships, name)
+    computers_board(hidden_board)
+    game(player_board, computer_board, hidden_board, data, ships, name)
         
 
 def count_hits(board):
@@ -167,13 +168,19 @@ def count_hits(board):
     return count
 
 
+def end_game():
+    input("Press any key to start a new game! \n")
+    print("-" * 35)
+    main()
+
+
 def main():
     """
     Main function to run the game
     """
     name = new_game()
     data = board_size(name)
-    create_board(data)
+    hidden_board = create_board(data)
     player_board = create_board(data)
     computer_board = create_board(data)
     ships = number_of_ships(name)
@@ -181,11 +188,13 @@ def main():
     random_ships(data, ships, computer_board)
     print("-" * 35)
     print("LETS BEGIN!!!")
+    print(f"Board size: {data}. Number of ships: {ships}")
     print("TOP LEFT CORNER IS ROW:1, COL:1")
     print("-" * 35)
     players_board(player_board, name)
     computers_board(computer_board)
-    game(player_board, computer_board, data, ships, name)
+    computers_board(hidden_board)
+    game(player_board, computer_board, hidden_board, data, ships, name)
         
 
 main()
