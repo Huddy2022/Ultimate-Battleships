@@ -126,28 +126,32 @@ def validate_guess(value, size):
     return True
 
 
-def computers_guess(size):
+def computers_guess(size, player_board):
     row, column = randint(0, size - 1), randint(0, size - 1)
+    while player_board[row][column] == "X" or "-":
+        row, column = randint(0, size - 1), randint(0, size - 1)
     return row, column
 
 
 def game(player_board, computer_board, data, ships, name):
     row, column = players_guess(data)
-    comp_row, comp_col = computers_guess(data)
+    comp_row, comp_col = computers_guess(data, player_board)
     if computer_board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP!")
         computer_board[row][column] = "X"
-        if player_board[comp_row][comp_col] == "@":
+        if count_hits(computer_board) == ships:
+            print("YOU WIN")
+            print("-" * 35)
+            main()
+        elif player_board[comp_row][comp_col] == "@":
             print("COMPUTER HIT YOU'RE SHIP!")
             player_board[comp_row][comp_col] = "X"
-            if count_hits(computer_board) == ships:
-                print("GAME OVER")
+            if count_hits(player_board) == ships:
+                print("GAME OVER YOU LOSE")
+                print("-" * 35)
                 main()
         elif player_board[comp_row][comp_col] == "O":
             player_board[comp_row][comp_col] = "-"
-            if count_hits(computer_board) == ships:
-                print("GAME OVER")
-                main()
     elif computer_board[row][column] == "O":
         print("Sorry, you missed!")
         computer_board[row][column] = "-"
@@ -155,11 +159,11 @@ def game(player_board, computer_board, data, ships, name):
             print("COMPUTER HIT YOU'RE SHIP!")
             player_board[comp_row][comp_col] = "X"
             if count_hits(player_board) == ships:
-                print("GAME OVER")
+                print("GAME OVER YOU LOSE")
+                print("-" * 35)
                 main()
         elif player_board[comp_row][comp_col] == "O":
-            player_board[comp_row][comp_col] = "-"
-    
+            player_board[comp_row][comp_col] = "-"    
     players_board(player_board, name)
     computers_board(computer_board)
     game(player_board, computer_board, data, ships, name)
