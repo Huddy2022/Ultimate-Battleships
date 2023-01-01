@@ -23,6 +23,7 @@ def board_size(name):
                 continue
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
+            print("-" * 35)
             continue
         print("-" * 35)
         return board_size
@@ -33,26 +34,18 @@ def number_of_ships(name):
     Let user select how many ships they would like to play with between 4-8
     """
     while True:
-        number_of_ships = int(input(f"{name} Please select how many ships in the game between 4-8: \n"))
-        if validate_number_of_ships(number_of_ships) is True:
+        try:
+            number_of_ships = int(input(f"{name} Please select how many ships in the game between 4-8: \n"))
+            if not (4 <= int(number_of_ships) <= 8):
+                print(f"Please provide a number between 4-8, you provided {number_of_ships}")
+                print("-" * 35)
+                continue
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
             print("-" * 35)
-            return number_of_ships
-        else:
-            return False
-
-
-def validate_number_of_ships(value):
-    """
-    Inside the try it checks the users value is between 4 - 8
-    and raises a ValueError if a string is used rather and than integer
-    """
-    try:
-        if not (4 <= int(value) <= 8):
-            raise ValueError(f"Please provide a number between 4-8, you provided {value}")
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
-    return True
+            continue 
+        print("-" * 35)
+        return number_of_ships
 
 
 def create_board(size):
