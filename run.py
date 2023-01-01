@@ -138,6 +138,7 @@ def game(player_board, computer_board, data, ships, name):
     comp_row, comp_col = computers_guess(data, player_board)
     if computer_board[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP!")
+        print("-" * 35)
         computer_board[row][column] = "X"
         if count_hits(computer_board) == ships:
             print("YOU WIN")
@@ -145,6 +146,7 @@ def game(player_board, computer_board, data, ships, name):
             main()
         elif player_board[comp_row][comp_col] == "@":
             print("COMPUTER HIT YOU'RE SHIP!")
+            print("-" * 35)
             player_board[comp_row][comp_col] = "X"
             if count_hits(player_board) == ships:
                 print("GAME OVER YOU LOSE")
@@ -154,9 +156,11 @@ def game(player_board, computer_board, data, ships, name):
             player_board[comp_row][comp_col] = "-"
     elif computer_board[row][column] == "O":
         print("Sorry, you missed!")
+        print("-" * 35)
         computer_board[row][column] = "-"
         if player_board[comp_row][comp_col] == "@":
             print("COMPUTER HIT YOU'RE SHIP!")
+            print("-" * 35)
             player_board[comp_row][comp_col] = "X"
             if count_hits(player_board) == ships:
                 print("GAME OVER YOU LOSE")
@@ -192,6 +196,10 @@ def main():
     random_ships(data, ships, computer_board)
     players_board(player_board, name)
     computers_board(computer_board)
+    print("-" * 35)
+    print("LETS BEGIN!!!")
+    print("TOP LEFT CORNER IS ROW:1, COL:1")
+    print("-" * 35)
     game(player_board, computer_board, data, ships, name)
         
 
