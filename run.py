@@ -270,18 +270,18 @@ def end_game():
     main()
 
 
-name = new_game()
+user_name = new_game()
 
 
 def main():
     """
     Main function to run the game
     """
-    size = board_size(name)
+    size = board_size(user_name)
     hidden = create_board(size)
     player = create_board(size)
     computer = create_board(size)
-    ships = number_of_ships(name)
+    ships = number_of_ships(user_name)
     random_ships(size, ships, player)
     random_ships(size, ships, computer)
     print("-" * 35)
@@ -290,9 +290,9 @@ def main():
     print("TOP LEFT CORNER IS ROW:1, COL:1")
     print("'-': Is Miss, 'X': Is Hit, 'O': Is Water")
     print("-" * 35)
-    players_board(player, name)
+    players_board(player, user_name)
     computers_board(hidden)
-    game(player, computer, hidden, size, ships, name)
+    game(player, computer, hidden, size, ships, user_name)
 
 
 main()
