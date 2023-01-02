@@ -210,6 +210,11 @@ def game(player, computer, hidden, data, ships, name):
                 end_game()
         elif player[comp_row][comp_col] == "O":
             player[comp_row][comp_col] = "-"
+    player_score = count_hits(hidden)
+    computer_score = count_hits(player)
+    print("After this round, the scores are:")
+    print(f"{name}: {player_score}. Computer: {computer_score}")
+    print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
     game(player, computer, hidden, data, ships, name)
