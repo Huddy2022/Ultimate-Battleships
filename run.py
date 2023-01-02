@@ -253,6 +253,7 @@ def main():
     print("LETS BEGIN!!!")
     print(f"Board size: {data}. Number of ships: {ships}")
     print("TOP LEFT CORNER IS ROW:1, COL:1")
+    print("'-': Is Miss, 'X': Is Hit, 'O': Is Water")
     print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
