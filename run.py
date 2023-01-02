@@ -180,7 +180,8 @@ def game(player, computer, hidden, data, ships, name):
         print("-" * 35)
         hidden[row][column] = "X"
         if count_hits(hidden) == ships:
-            print("YOU WIN, CONGRATULATIONS")
+            print("GAME OVER")
+            print(f"YOU WIN, CONGRATULATIONS {name}!")
             print("-" * 35)
             end_game()
         elif player[comp_row][comp_col] == "@":
@@ -188,7 +189,8 @@ def game(player, computer, hidden, data, ships, name):
             print("-" * 35)
             player[comp_row][comp_col] = "X"
             if count_hits(player) == ships:
-                print("GAME OVER YOU LOSE")
+                print("GAME OVER")
+                print(f"You lost {name}, better luck next time")
                 print("-" * 35)
                 end_game()
         elif player[comp_row][comp_col] == "O":
@@ -202,7 +204,8 @@ def game(player, computer, hidden, data, ships, name):
             print("-" * 35)
             player[comp_row][comp_col] = "X"
             if count_hits(player) == ships:
-                print("GAME OVER YOU LOSE")
+                print("GAME OVER")
+                print(f"You lost {name}, better luck next time")
                 print("-" * 35)
                 end_game()
         elif player[comp_row][comp_col] == "O":
