@@ -159,7 +159,7 @@ def computers_guess(size, board):
     return row, column
 
 
-def game(player, computer, hidden, data, ships, name):
+def game(player, computer, hidden, size, ships, name):
     """
     When the game has begun this function will run.
     '-' means miss
@@ -178,11 +178,11 @@ def game(player, computer, hidden, data, ships, name):
     """
     global player_game_score
     global computer_game_score
-    row, column = players_guess(data)
-    comp_row, comp_col = computers_guess(data, player)
+    row, column = players_guess(size)
+    comp_row, comp_col = computers_guess(size, player)
     if hidden[row][column] == "X" or hidden[row][column] == "-":
         print("You already picked those coordinates try again")
-        game(player, computer, hidden, data, ships, name)
+        game(player, computer, hidden, size, ships, name)
     elif computer[row][column] == "@":
         print("YOU SUNK MY BATTLESHIP!")
         print("-" * 35)
@@ -237,7 +237,7 @@ def game(player, computer, hidden, data, ships, name):
     print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
-    game(player, computer, hidden, data, ships, name)
+    game(player, computer, hidden, size, ships, name)
 
 
 def count_hits(board):
@@ -272,22 +272,22 @@ def main():
     """
     Main function to run the game
     """
-    data = board_size(name)
-    hidden = create_board(data)
-    player = create_board(data)
-    computer = create_board(data)
+    size = board_size(name)
+    hidden = create_board(size)
+    player = create_board(size)
+    computer = create_board(size)
     ships = number_of_ships(name)
-    random_ships(data, ships, player)
-    random_ships(data, ships, computer)
+    random_ships(size, ships, player)
+    random_ships(size, ships, computer)
     print("-" * 35)
     print("LETS BEGIN!!!")
-    print(f"Board size: {data}. Number of ships: {ships}")
+    print(f"Board size: {size}. Number of ships: {ships}")
     print("TOP LEFT CORNER IS ROW:1, COL:1")
     print("'-': Is Miss, 'X': Is Hit, 'O': Is Water")
     print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
-    game(player, computer, hidden, data, ships, name)
+    game(player, computer, hidden, size, ships, name)
 
 
 main()
