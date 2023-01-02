@@ -187,20 +187,16 @@ def game(player, computer, hidden, size, ships, name):
         print("YOU SUNK MY BATTLESHIP!")
         print("-" * 35)
         hidden[row][column] = "X"
-        if count_hits(hidden) == ships:
-            player_game_score += 1
-            print("GAME OVER")
-            print(f"YOU WIN, CONGRATULATIONS {name}!")
-            print("-" * 35)
-            print(f"GAME SCORE, {name}: {player_game_score}, " +
-                  f"Computer: {computer_game_score}")
-            print("-" * 35)
-            end_game()
-        elif player[comp_row][comp_col] == "@":
+        if player[comp_row][comp_col] == "@":
             print("COMPUTER HIT YOU'RE SHIP!")
             print("-" * 35)
             player[comp_row][comp_col] = "X"
-            if count_hits(player) == ships:
+            if count_hits(hidden) == ships and count_hits(player) == ships:
+                print("GAME OVER")
+                print("WOW A DRAW")
+                print("-" * 35)
+                end_game()
+            elif count_hits(player) == ships:
                 computer_game_score += 1
                 print("GAME OVER")
                 print(f"You lost {name}, better luck next time")
@@ -209,6 +205,15 @@ def game(player, computer, hidden, size, ships, name):
                       f"Computer: {computer_game_score}")
                 print("-" * 35)
                 end_game()
+        elif count_hits(hidden) == ships:
+            player_game_score += 1
+            print("GAME OVER")
+            print(f"YOU WIN, CONGRATULATIONS {name}!")
+            print("-" * 35)
+            print(f"GAME SCORE, {name}: {player_game_score}, " +
+                  f"Computer: {computer_game_score}")
+            print("-" * 35)
+            end_game()
         elif player[comp_row][comp_col] == "O":
             player[comp_row][comp_col] = "-"
     elif computer[row][column] == "O":
@@ -237,6 +242,7 @@ def game(player, computer, hidden, size, ships, name):
     print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
+    computers_board(computer)
     game(player, computer, hidden, size, ships, name)
 
 
