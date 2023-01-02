@@ -1,6 +1,10 @@
 from random import randint
 
 
+player_game_score = 0
+computer_game_score = 0
+
+
 def new_game():
     """
     Starts a new game and get user to add their name for the game.
@@ -172,6 +176,8 @@ def game(player, computer, hidden, data, ships, name):
     At end the end of each round the scores will be show for both player
     and computer, and boards will be printed again.
     """
+    global player_game_score
+    global computer_game_score
     row, column = players_guess(data)
     comp_row, comp_col = computers_guess(data, player)
     if hidden[row][column] == "X" or hidden[row][column] == "-":
@@ -182,8 +188,12 @@ def game(player, computer, hidden, data, ships, name):
         print("-" * 35)
         hidden[row][column] = "X"
         if count_hits(hidden) == ships:
+            player_game_score += 1
             print("GAME OVER")
             print(f"YOU WIN, CONGRATULATIONS {name}!")
+            print("-" * 35)
+            print(f"GAME SCORE, {name}: {player_game_score}, " +
+                  f"Computer: {computer_game_score}")
             print("-" * 35)
             end_game()
         elif player[comp_row][comp_col] == "@":
@@ -191,8 +201,12 @@ def game(player, computer, hidden, data, ships, name):
             print("-" * 35)
             player[comp_row][comp_col] = "X"
             if count_hits(player) == ships:
+                computer_game_score += 1
                 print("GAME OVER")
                 print(f"You lost {name}, better luck next time")
+                print("-" * 35)
+                print(f"GAME SCORE, {name}: {player_game_score}, " +
+                      f"Computer: {computer_game_score}")
                 print("-" * 35)
                 end_game()
         elif player[comp_row][comp_col] == "O":
@@ -206,8 +220,12 @@ def game(player, computer, hidden, data, ships, name):
             print("-" * 35)
             player[comp_row][comp_col] = "X"
             if count_hits(player) == ships:
+                computer_game_score += 1
                 print("GAME OVER")
                 print(f"You lost {name}, better luck next time")
+                print("-" * 35)
+                print(f"GAME SCORE, {name}: {player_game_score}, " +
+                      f"Computer: {computer_game_score}")
                 print("-" * 35)
                 end_game()
         elif player[comp_row][comp_col] == "O":
@@ -247,11 +265,13 @@ def end_game():
     main()
 
 
+name = new_game()
+
+
 def main():
     """
     Main function to run the game
     """
-    name = new_game()
     data = board_size(name)
     hidden = create_board(data)
     player = create_board(data)
