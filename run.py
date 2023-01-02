@@ -169,6 +169,8 @@ def game(player, computer, hidden, data, ships, name):
     The nested if, elif statements do further checks if a hit or miss has
     occured, until finally once all ships on one of the boards are hit
     using the count hits function, it will send you to the end game function.
+    At end the end of each round the scores will be show for both player
+    and computer, and boards will be printed again.
     """
     row, column = players_guess(data)
     comp_row, comp_col = computers_guess(data, player)
