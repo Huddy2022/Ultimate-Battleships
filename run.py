@@ -16,11 +16,11 @@ def board_size(name):
     """
     while True:
         try:
-            board_size = int(input(f"{name} please select a board " +
-                                   "size between 5-10: \n"))
-            if not (5 <= (board_size) <= 10):
+            size = int(input(f"{name} please select a board " +
+                             "size between 5-10: \n"))
+            if not (5 <= (size) <= 10):
                 print("Please provide a number between 5-10, " +
-                      f"you provided {board_size}")
+                      f"you provided {size}")
                 print("-" * 35)
                 continue
         except ValueError:
@@ -28,7 +28,7 @@ def board_size(name):
             print("-" * 35)
             continue
         print("-" * 35)
-        return board_size
+        return size
 
 
 def number_of_ships(name):
@@ -47,7 +47,7 @@ def number_of_ships(name):
         except ValueError:
             print("PLEASE ENTER A NUMBER")
             print("-" * 35)
-            continue 
+            continue
         print("-" * 35)
         return game_ships
 
@@ -63,7 +63,7 @@ def create_board(size):
 def players_board(board, name):
     """
     Print the board using the create_board function and
-    the randome_ships function. 
+    the randome_ships function.
     print the list elements in single lines with space
     """
     print(f"{name}'s Board:")
@@ -156,11 +156,11 @@ def game(player_board, computer_board, hidden_board, data, ships, name):
                 print("-" * 35)
                 end_game()
         elif player_board[comp_row][comp_col] == "O":
-            player_board[comp_row][comp_col] = "-"    
+            player_board[comp_row][comp_col] = "-"
     players_board(player_board, name)
     computers_board(hidden_board)
     game(player_board, computer_board, hidden_board, data, ships, name)
-        
+
 
 def count_hits(board):
     count = 0
@@ -197,6 +197,6 @@ def main():
     players_board(player_board, name)
     computers_board(hidden_board)
     game(player_board, computer_board, hidden_board, data, ships, name)
-        
+
 
 main()
