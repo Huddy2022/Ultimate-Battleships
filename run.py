@@ -16,9 +16,11 @@ def board_size(name):
     """
     while True:
         try:
-            board_size = int(input(f"{name} please select a board size between 5-10: \n"))
+            board_size = int(input(f"{name} please select a board " +
+                                   "size between 5-10: \n"))
             if not (5 <= (board_size) <= 10):
-                print(f"Please provide a number between 5-10, you provided {board_size}")
+                print("Please provide a number between 5-10, " +
+                      f"you provided {board_size}")
                 print("-" * 35)
                 continue
         except ValueError:
@@ -35,9 +37,11 @@ def number_of_ships(name):
     """
     while True:
         try:
-            number_of_ships = int(input(f"{name} Please select how many ships in the game between 4-8: \n"))
-            if not (4 <= (number_of_ships) <= 8):
-                print(f"Please provide a number between 4-8, you provided {number_of_ships}")
+            game_ships = int(input(f"{name} Please select how many " +
+                                   "ships in the game between 4-8: \n"))
+            if not (4 <= (game_ships) <= 8):
+                print("Please provide a number between 4-8, " +
+                      f" you provided {game_ships}")
                 print("-" * 35)
                 continue
         except ValueError:
@@ -45,7 +49,7 @@ def number_of_ships(name):
             print("-" * 35)
             continue 
         print("-" * 35)
-        return number_of_ships
+        return game_ships
 
 
 def create_board(size):
