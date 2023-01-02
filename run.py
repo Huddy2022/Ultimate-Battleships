@@ -242,7 +242,6 @@ def game(player, computer, hidden, size, ships, name):
     print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
-    computers_board(computer)
     game(player, computer, hidden, size, ships, name)
 
 
