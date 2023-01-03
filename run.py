@@ -11,7 +11,7 @@ def user():
     """
     print("Welcome to Ultimate Battleships\n")
     print("-" * 35)
-    player_name = input("Please enter your name: \n")
+    player_name = input("Please enter your name:\n")
     print("-" * 35)
     return player_name
 
@@ -24,7 +24,7 @@ def board_size(name):
     while True:
         try:
             size = int(input(f"{name} please select a board " +
-                             "size between 5-10: \n"))
+                             "size between 5-10:\n"))
             if not (5 <= (size) <= 10):
                 print("Please provide a number between 5-10, " +
                       f"you provided {size}")
@@ -46,7 +46,7 @@ def number_of_ships(name):
     while True:
         try:
             game_ships = int(input(f"{name} Please select how many " +
-                                   "ships in the game between 4-8: \n"))
+                                   "ships in the game between 4-8:\n"))
             if not (4 <= (game_ships) <= 8):
                 print("Please provide a number between 4-8, " +
                       f" you provided {game_ships}")
@@ -265,7 +265,7 @@ def end_game():
     It allows the user to press any key to start a new game,
     which will link back to the main function.
     """
-    input("Press any key to start a new game! \n")
+    input("Press any key to start a new game!\n")
     print("-" * 35)
     main()
 
