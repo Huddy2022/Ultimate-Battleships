@@ -1,19 +1,19 @@
 from random import randint
 
 
-player_game_score = 0
-computer_game_score = 0
+PLAYER_GAME_SCORE = 0
+COMPUTER_GAME_SCORE = 0
 
 
-def new_game():
+def user():
     """
-    Starts a new game and get user to add their name for the game.
+    Gets user to add their name for the game.
     """
     print("Welcome to Ultimate Battleships\n")
     print("-" * 35)
-    user_name = input("Please enter your name: \n")
+    player_name = input("Please enter your name: \n")
     print("-" * 35)
-    return user_name
+    return player_name
 
 
 def board_size(name):
@@ -166,8 +166,8 @@ def game(player, computer, hidden, size, ships, name):
     'X' means hit
     Intially it will allow the user to have a guess as well as the computer.
     Using the if, elif statements it will first check if the user has selected
-    the coordinates before and if they have will be sent back to the guess
-    function.
+    the same coordinates as before and if they have will be sent back to the
+    guess function.
     The rest of the if, elif statements check if the user and computer
     either hit or missed a ship.
     The nested if, elif statements do further checks if a hit or miss has
@@ -176,8 +176,8 @@ def game(player, computer, hidden, size, ships, name):
     At end the end of each round the scores will be show for both player
     and computer, and boards will be printed again.
     """
-    global player_game_score
-    global computer_game_score
+    global PLAYER_GAME_SCORE
+    global COMPUTER_GAME_SCORE
     row, column = players_guess(size)
     comp_row, comp_col = computers_guess(size, player)
     if hidden[row][column] == "X" or hidden[row][column] == "-":
@@ -197,21 +197,21 @@ def game(player, computer, hidden, size, ships, name):
                 print("-" * 35)
                 end_game()
             elif count_hits(player) == ships:
-                computer_game_score += 1
+                COMPUTER_GAME_SCORE += 1
                 print("GAME OVER")
                 print(f"You lost {name}, better luck next time")
                 print("-" * 35)
-                print(f"GAME SCORE, {name}: {player_game_score}, " +
-                      f"Computer: {computer_game_score}")
+                print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
+                      f"Computer: {COMPUTER_GAME_SCORE}")
                 print("-" * 35)
                 end_game()
         elif count_hits(hidden) == ships:
-            player_game_score += 1
+            PLAYER_GAME_SCORE += 1
             print("GAME OVER")
             print(f"YOU WIN, CONGRATULATIONS {name}!")
             print("-" * 35)
-            print(f"GAME SCORE, {name}: {player_game_score}, " +
-                  f"Computer: {computer_game_score}")
+            print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
+                  f"Computer: {COMPUTER_GAME_SCORE}")
             print("-" * 35)
             end_game()
         elif player[comp_row][comp_col] == "O":
@@ -225,12 +225,12 @@ def game(player, computer, hidden, size, ships, name):
             print("-" * 35)
             player[comp_row][comp_col] = "X"
             if count_hits(player) == ships:
-                computer_game_score += 1
+                COMPUTER_GAME_SCORE += 1
                 print("GAME OVER")
                 print(f"You lost {name}, better luck next time")
                 print("-" * 35)
-                print(f"GAME SCORE, {name}: {player_game_score}, " +
-                      f"Computer: {computer_game_score}")
+                print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
+                      f"Computer: {COMPUTER_GAME_SCORE}")
                 print("-" * 35)
                 end_game()
         elif player[comp_row][comp_col] == "O":
@@ -270,7 +270,7 @@ def end_game():
     main()
 
 
-user_name = new_game()
+user_name = user()
 
 
 def main():
