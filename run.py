@@ -16,18 +16,22 @@ def user():
     return player_name
 
 
-def board_size(name):
+def board_size():
     """
     Lets user select the board size for the game
     between 5 - 10.
     """
+    return validate_data("Please select a board size between", 5, 10)
+
+
+def validate_data(prompt, start, end):
     while True:
         try:
-            size = int(input(f"{name} please select a board " +
-                             "size between 5-10:\n"))
-            if not (5 <= (size) <= 10):
-                print("Please provide a number between 5-10, " +
-                      f"you provided {size}")
+            num = int(input(f"{user_name} {prompt} " +
+                            f"{start}-{end}:\n"))
+            if not (start <= (num) <= end):
+                print(f"Please provide a number between {start}-{end}, " +
+                      f"you provided {num}")
                 print("-" * 35)
                 continue
         except ValueError:
@@ -35,29 +39,16 @@ def board_size(name):
             print("-" * 35)
             continue
         print("-" * 35)
-        return size
+        return num
 
 
-def number_of_ships(name):
+def number_of_ships():
     """
     Let user select how many ships they would like to play
     in the game between 4 - 8.
     """
-    while True:
-        try:
-            game_ships = int(input(f"{name} Please select how many " +
-                                   "ships in the game between 4-8:\n"))
-            if not (4 <= (game_ships) <= 8):
-                print("Please provide a number between 4-8, " +
-                      f" you provided {game_ships}")
-                print("-" * 35)
-                continue
-        except ValueError:
-            print("PLEASE ENTER A NUMBER")
-            print("-" * 35)
-            continue
-        print("-" * 35)
-        return game_ships
+    return validate_data("Please select how many ships in the game between", +
+                         4, 8)
 
 
 def create_board(size):
@@ -242,7 +233,6 @@ def game(player, computer, hidden, size, ships, name):
     print("-" * 35)
     players_board(player, name)
     computers_board(hidden)
-    game(player, computer, hidden, size, ships, name)
 
 
 def count_hits(board):
@@ -277,11 +267,11 @@ def main():
     """
     Main function to run the game
     """
-    size = board_size(user_name)
+    size = board_size()
     hidden = create_board(size)
     player = create_board(size)
     computer = create_board(size)
-    ships = number_of_ships(user_name)
+    ships = number_of_ships()
     random_ships(size, ships, player)
     random_ships(size, ships, computer)
     print("-" * 35)
