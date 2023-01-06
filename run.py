@@ -16,18 +16,18 @@ def user():
     return player_name
 
 
-def board_size():
+def board_size(name):
     """
     Lets user select the board size for the game
     between 5 - 10.
     """
-    return validate_data("Please select a board size between", 5, 10)
+    return validate_data("Please select a board size between", 5, 10, name)
 
 
-def validate_data(prompt, start, end):
+def validate_data(prompt, start, end, name):
     while True:
         try:
-            num = int(input(f"{user_name} {prompt} " +
+            num = int(input(f"{name} {prompt} " +
                             f"{start}-{end}:\n"))
             if not (start <= (num) <= end):
                 print(f"Please provide a number between {start}-{end}, " +
@@ -42,13 +42,13 @@ def validate_data(prompt, start, end):
         return num
 
 
-def number_of_ships():
+def number_of_ships(name):
     """
     Let user select how many ships they would like to play
     in the game between 4 - 8.
     """
     return validate_data("Please select how many ships in the game between", +
-                         4, 8)
+                         4, 8, name)
 
 
 def create_board(size):
@@ -61,14 +61,14 @@ def create_board(size):
     return [["O" for count in range(size)] for count in range(size)]
 
 
-def players_board(board):
+def players_board(board, name):
     """
     Use the create board function as the board argument.
     Get the users name from the new game function.
     Print the board using a for loop through the list,
     and use * for a space between each O.
     """
-    print(f"{user_name}'s Board:")
+    print(f"{name}'s Board:")
     for b in board:
         print(*b)
 
@@ -150,7 +150,7 @@ def computers_guess(size, board):
     return row, column
 
 
-def game(player, computer, hidden, size, ships,):
+def game(player, computer, hidden, size, ships, name):
     """
     When the game has begun this function will run.
     '-' means miss
@@ -167,14 +167,14 @@ def game(player, computer, hidden, size, ships,):
     At end the end of each round the scores will be show for both player
     and computer, and boards will be printed again.
     """
+    global PLAYER_GAME_SCORE
+    global COMPUTER_GAME_SCORE
     while True:
-        global PLAYER_GAME_SCORE
-        global COMPUTER_GAME_SCORE
         row, column = players_guess(size)
         comp_row, comp_col = computers_guess(size, player)
         if hidden[row][column] == "X" or hidden[row][column] == "-":
             print("You already picked those coordinates try again")
-            game(player, computer, hidden, size, ships)
+            game(player, computer, hidden, size, ships, name)
         elif computer[row][column] == "@":
             print("YOU SUNK MY BATTLESHIP!")
             print("-" * 35)
@@ -187,25 +187,37 @@ def game(player, computer, hidden, size, ships,):
                     print("GAME OVER")
                     print("WOW A DRAW")
                     print("-" * 35)
-                    end_game()
+                    print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
+                          f"Computer: {COMPUTER_GAME_SCORE}")
+                    print("-" * 35)
+                    end_game(name)
+                elif count_hits(hidden) == ships:
+                    PLAYER_GAME_SCORE += 1
+                    print("GAME OVER")
+                    print(f"YOU WIN, CONGRATULATIONS {name}!")
+                    print("-" * 35)
+                    print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
+                          f"Computer: {COMPUTER_GAME_SCORE}")
+                    print("-" * 35)
+                    end_game(name)
                 elif count_hits(player) == ships:
                     COMPUTER_GAME_SCORE += 1
                     print("GAME OVER")
-                    print(f"You lost {user_name}, better luck next time")
+                    print(f"You lost {name}, better luck next time")
                     print("-" * 35)
-                    print(f"GAME SCORE, {user_name}: {PLAYER_GAME_SCORE}, " +
+                    print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                           f"Computer: {COMPUTER_GAME_SCORE}")
                     print("-" * 35)
-                    end_game()
+                    end_game(name)
             elif count_hits(hidden) == ships:
                 PLAYER_GAME_SCORE += 1
                 print("GAME OVER")
-                print(f"YOU WIN, CONGRATULATIONS {user_name}!")
+                print(f"YOU WIN, CONGRATULATIONS {name}!")
                 print("-" * 35)
-                print(f"GAME SCORE, {user_name}: {PLAYER_GAME_SCORE}, " +
+                print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                       f"Computer: {COMPUTER_GAME_SCORE}")
                 print("-" * 35)
-                end_game()
+                end_game(name)
             elif player[comp_row][comp_col] == "O":
                 player[comp_row][comp_col] = "-"
         elif computer[row][column] == "O":
@@ -219,22 +231,23 @@ def game(player, computer, hidden, size, ships,):
                 if count_hits(player) == ships:
                     COMPUTER_GAME_SCORE += 1
                     print("GAME OVER")
-                    print(f"You lost {user_name}, better luck next time")
+                    print(f"You lost {name}, better luck next time")
                     print("-" * 35)
-                    print(f"GAME SCORE, {user_name}: {PLAYER_GAME_SCORE}, " +
+                    print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                           f"Computer: {COMPUTER_GAME_SCORE}")
                     print("-" * 35)
-                    end_game()
+                    end_game(name)
             elif player[comp_row][comp_col] == "O":
                 player[comp_row][comp_col] = "-"
         player_score = count_hits(hidden)
         computer_score = count_hits(player)
         print("After this round, the scores are:")
-        print(f"{user_name}: {player_score}. Computer: {computer_score}")
-        quit_game()
+        print(f"{name}: {player_score}. Computer: {computer_score}")
         print("-" * 35)
-        players_board(player)
+        players_board(player, name)
         computers_board(hidden)
+        if quit_game() is False:
+            restart()
 
 
 def count_hits(board):
@@ -258,32 +271,36 @@ def quit_game():
         print("-" * 35)
         return False
 
-    return True
 
-
-def end_game():
+def end_game(name):
     """
     End game function, will run once all ships have been sunk.
     It allows the user to press any key to start a new game,
     which will link back to the main function.
     """
     input("Press any key to continue:\n")
-    main()
+    main(name)
     print("-" * 35)
 
 
-user_name = user()
+def restart():
+    global PLAYER_GAME_SCORE
+    global COMPUTER_GAME_SCORE
+    name = user()
+    PLAYER_GAME_SCORE = 0
+    COMPUTER_GAME_SCORE = 0
+    main(name)
 
 
-def main():
+def main(name):
     """
     Main function to run the game
     """
-    size = board_size()
+    size = board_size(name)
     hidden = create_board(size)
     player = create_board(size)
     computer = create_board(size)
-    ships = number_of_ships()
+    ships = number_of_ships(name)
     random_ships(size, ships, player)
     random_ships(size, ships, computer)
     print("-" * 35)
@@ -292,9 +309,13 @@ def main():
     print("TOP LEFT CORNER IS ROW:1, COL:1")
     print("'-': Is Miss, 'X': Is Hit, 'O': Is Water")
     print("-" * 35)
-    players_board(player)
+    players_board(player, name)
     computers_board(hidden)
-    game(player, computer, hidden, size, ships)
+    initialize(player, computer, hidden, size, ships, name)
 
 
-main()
+def initialize(player, computer, hidden, size, ships, name):
+    game(player, computer, hidden, size, ships, name)
+
+
+restart()
