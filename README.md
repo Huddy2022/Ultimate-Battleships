@@ -1,31 +1,65 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# ULTIMATE BATTLESHIPS
 
-Welcome Huddy2022,
+Ultimate Battleships is a python terminal game, which runs in the code insitute mock terminal of Heroku.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+The user gets to add their name, the board size and how many ships to play with. Once the game runs the user is up against a computer and whoever sinks all the battleships first wins. The user can play as many times as they like, a a game score for the user and computer will be logged, until the user quits which will re set everything and allow a new user to start.
 
-## Reminders
+The Live link can be found here -
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+## How to play
 
-## Creating the Heroku app
+Battleships is a classic game where you guess coordinates and if your right hit a ship on the board, until all ships are gone.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+In this version, the user will add their name, choose a board size between 5-10. Choose how many ships to be place on the board between 4-8 and will be up against a computer.
 
-1. `heroku/python`
-2. `heroku/nodejs`
+The player and the computer will have a go each round.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+'@' displays on the players board to show where their ships are.
+'O' means water
+'-' means miss
+'X' means Hit
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+The user will have a guess bettween 1 and the size of the board for row and column.
 
-Connect your GitHub repository and deploy as normal.
+Once all ships have been destoryed on either the players board or the computers board the game is over and the user can decide if they want another game or to quit. 
 
-## Constraints
+## Features
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+- User can input their name.
+- They can decided how big the board is each game, between 5-10.
+- They can also decide how many ships on each game, between 4-8.
+- The player cannot see where the computer ships are but can see their own ships.
 
------
-Happy coding!
+![Input]()
+
+- Input validation and error checking
+ - Must enter a number for board size and number of ships.
+ - Cannot enter numbers outside the recommended range.
+
+![input_validator]()
+
+- Play against a computer.
+- logs if you miss or hit as well as the computer.
+- Accepts user input.
+- Maintains scores during the game.
+- Maintains a overall game score, if user decides to have multiple games.
+
+![scores]()
+
+- Input validation and error checking
+ - Cannot enter coordinates outside the size of the board
+ - You must enter numbers
+ - Cannot enter the same guess twice
+
+![scores_validator]()
+
+## Future features
+
+- Allow player to position ships themselves.
+- Have ships larger than 1 x 1.
+
+## Data model
+
+- The create_board function, is where the data is contained of the board size, number of ships and name.
+- It is passed to either the players_board or the computers_board which holds the data for the game to run.
+

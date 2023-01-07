@@ -25,6 +25,12 @@ def board_size(name):
 
 
 def validate_data(prompt, start, end, name):
+    """
+    This function validates the data passed to it from the functions
+    board_size and number_ships.
+    It checks if the correct input is being put in by the user and uses
+    a try and except to test this.
+    """
     while True:
         try:
             num = int(input(f"{name} {prompt} " +
@@ -53,19 +59,22 @@ def number_of_ships(name):
 
 def create_board(size):
     """
-    Create the board using the size the user selected.
-    Create a list and place O for each space in range of the user's
+    This is the data model for the game.
+    Creates a list and place O for each space in range of the user's
     selected board size.
     O represents water!
+    It creates the board by storing the data using the size the user selected.
+    Eventually it will store the player, computer and hidden board, along with
+    all the ships, hits and misses.
     """
     return [["O" for count in range(size)] for count in range(size)]
 
 
 def players_board(board, name):
     """
-    Use the create board function as the board argument.
-    Get the users name from the new game function.
-    Print the board using a for loop through the list,
+    Use's the create board function as the board argument.
+    Get's the users name from the user function.
+    Print's the board using a for loop through the list,
     and use * for a space between each O.
     """
     print(f"{name}'s Board:")
@@ -75,8 +84,8 @@ def players_board(board, name):
 
 def computers_board(board):
     """
-    Use the creat board function as the board argument.
-    Print computers board so the user knows which board it is.
+    Use's the create board function as the board argument.
+    Print's computers board so the user knows which board it is.
     Loop through the board list and print with a space,
     in between the O using *.
     """
@@ -92,7 +101,7 @@ def random_ships(size, ships, board):
     '@' means ship
     Loop through the range of ships, so we know how many ships,
     to place on the board.
-    Use randint to creat a random row and column for the ship,
+    Use randint to create a random row and column for the ship,
     to be placed on.
     Use a while loop to check that the coordinates,
     have not already been used before and if so add another random ship.
@@ -105,7 +114,7 @@ def random_ships(size, ships, board):
     return ship
 
 
-def players_guess(size):
+def players_guess(size, hidden):
     """
     This function allows the user to select a row and column,
     between 1 and the arguement size.
@@ -133,7 +142,14 @@ def players_guess(size):
         except ValueError:
             print("PLEASE ENTER A NUMBER")
             continue
-        print("-" * 35)
+        try:
+            if hidden[(row) - 1][(column) - 1] == "X" or \
+               hidden[(row) - 1][(column) - 1] == "-":
+                print("You already picked those coordinates try again")
+                continue
+        except TypeError:
+            print("something went wrong")
+            continue
         return (row) - 1, (column) - 1
 
 
@@ -156,26 +172,22 @@ def game(player, computer, hidden, size, ships, name):
     '-' means miss
     'X' means hit
     Intially it will allow the user to have a guess as well as the computer.
-    Using the if, elif statements it will first check if the user has selected
-    the same coordinates as before and if they have will be sent back to the
-    guess function.
-    The rest of the if, elif statements check if the user and computer
+    Using the if, elif statements it will check if the user and computer
     either hit or missed a ship.
     The nested if, elif statements do further checks if a hit or miss has
     occured, until finally once all ships on one of the boards are hit
     using the count hits function, it will send you to the end game function.
-    At end the end of each round the scores will be show for both player
+    At end the end of each round the scores will be shown for both player
     and computer, and boards will be printed again.
+    At the end of each round the player has the choice to quit the
+    game entirely and can start with a new player.
     """
     global PLAYER_GAME_SCORE
     global COMPUTER_GAME_SCORE
     while True:
-        row, column = players_guess(size)
+        row, column = players_guess(size, hidden)
         comp_row, comp_col = computers_guess(size, player)
-        if hidden[row][column] == "X" or hidden[row][column] == "-":
-            print("You already picked those coordinates try again")
-            game(player, computer, hidden, size, ships, name)
-        elif computer[row][column] == "@":
+        if computer[row][column] == "@":
             print("YOU SUNK MY BATTLESHIP!")
             print("-" * 35)
             hidden[row][column] = "X"
@@ -190,7 +202,7 @@ def game(player, computer, hidden, size, ships, name):
                     print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                           f"Computer: {COMPUTER_GAME_SCORE}")
                     print("-" * 35)
-                    end_game(name)
+                    end_game(name, 1)
                 elif count_hits(hidden) == ships:
                     PLAYER_GAME_SCORE += 1
                     print("GAME OVER")
@@ -199,7 +211,7 @@ def game(player, computer, hidden, size, ships, name):
                     print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                           f"Computer: {COMPUTER_GAME_SCORE}")
                     print("-" * 35)
-                    end_game(name)
+                    end_game(name, 1)
                 elif count_hits(player) == ships:
                     COMPUTER_GAME_SCORE += 1
                     print("GAME OVER")
@@ -208,7 +220,7 @@ def game(player, computer, hidden, size, ships, name):
                     print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                           f"Computer: {COMPUTER_GAME_SCORE}")
                     print("-" * 35)
-                    end_game(name)
+                    end_game(name, 1)
             elif count_hits(hidden) == ships:
                 PLAYER_GAME_SCORE += 1
                 print("GAME OVER")
@@ -217,9 +229,11 @@ def game(player, computer, hidden, size, ships, name):
                 print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                       f"Computer: {COMPUTER_GAME_SCORE}")
                 print("-" * 35)
-                end_game(name)
+                end_game(name, 1)
             elif player[comp_row][comp_col] == "O":
                 player[comp_row][comp_col] = "-"
+                print("Computer missed")
+                print("-" * 35)
         elif computer[row][column] == "O":
             print("Sorry, you missed!")
             print("-" * 35)
@@ -236,9 +250,11 @@ def game(player, computer, hidden, size, ships, name):
                     print(f"GAME SCORE, {name}: {PLAYER_GAME_SCORE}, " +
                           f"Computer: {COMPUTER_GAME_SCORE}")
                     print("-" * 35)
-                    end_game(name)
+                    end_game(name, 1)
             elif player[comp_row][comp_col] == "O":
                 player[comp_row][comp_col] = "-"
+                print("Computer missed")
+                print("-" * 35)
         player_score = count_hits(hidden)
         computer_score = count_hits(player)
         print("After this round, the scores are:")
@@ -246,8 +262,7 @@ def game(player, computer, hidden, size, ships, name):
         print("-" * 35)
         players_board(player, name)
         computers_board(hidden)
-        if quit_game() is False:
-            restart()
+        end_game(name, 0)
 
 
 def count_hits(board):
@@ -264,26 +279,33 @@ def count_hits(board):
     return count
 
 
-def quit_game():
+def end_game(name, game_over):
+    """
+    End game function, will run once all ships have been sunk or at the end
+    of each round.
+    There are two if and elif statements which checks the input or if its
+    the end of the game.
+    If input is q the user can quit the game entirely and allows a new user
+    to start a new game.
+    The game over only happens when all ships have been sunk and the user
+    can either start a new game or quit.
+    """
     print("-" * 35)
     end = input("Press any key to continue or q to quit game!\n")
     if end == "q":
         print("-" * 35)
-        return False
-
-
-def end_game(name):
-    """
-    End game function, will run once all ships have been sunk.
-    It allows the user to press any key to start a new game,
-    which will link back to the main function.
-    """
-    input("Press any key to continue:\n")
-    main(name)
-    print("-" * 35)
+        restart()
+    elif game_over == 1:
+        print("-" * 35)
+        main(name)
 
 
 def restart():
+    """
+    This function is called when the user wishes to quit the game.
+    It will re set everything and allow a new user to input their name.
+    The game scores will be re set for next user.
+    """
     global PLAYER_GAME_SCORE
     global COMPUTER_GAME_SCORE
     name = user()
@@ -315,6 +337,10 @@ def main(name):
 
 
 def initialize(player, computer, hidden, size, ships, name):
+    """
+    This function is to start playing the game and allows the function
+    to be taken out of the loop of the main function.
+    """
     game(player, computer, hidden, size, ships, name)
 
 
