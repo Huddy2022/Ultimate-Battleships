@@ -6,7 +6,7 @@ The user gets to add their name, the board size and how many ships to play with.
 
 The Live link can be found here - https://ultimate-battleships.herokuapp.com/
 
-![am-i-responsive]()
+![am-i-responsive](https://github.com/Huddy2022/Ultimate-Battleships/blob/main/assets/images/am-i-responsive.png)
 
 ## How to play
 
@@ -105,6 +105,7 @@ This project was deployed using the Code institutes mock terminal from heroku.
  - Steps for deployment:
   - Clone this repository 
   - Create a new heroku app
+  - Set config vars key PORT and value 8000
   - Set the buildbacks to Python and NodeJS in that order
   - Link the heroku app to the repository 
   - Click on deploy
