@@ -51,7 +51,7 @@ Once all ships have been destoryed on either the players board or the computers 
  - You must enter numbers
  - Cannot enter the same guess twice
 
-![scores_validator]()
+![guess_validator]()
 
 ## Future features
 
