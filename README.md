@@ -4,7 +4,9 @@ Ultimate Battleships is a python terminal game, which runs in the code insitute 
 
 The user gets to add their name, the board size and how many ships to play with. Once the game runs the user is up against a computer and whoever sinks all the battleships first wins. The user can play as many times as they like, a a game score for the user and computer will be logged, until the user quits which will re set everything and allow a new user to start.
 
-The Live link can be found here -
+The Live link can be found here - https://ultimate-battleships.herokuapp.com/
+
+![am-i-responsive]()
 
 ## How to play
 
@@ -30,13 +32,13 @@ Once all ships have been destoryed on either the players board or the computers 
 - They can also decide how many ships on each game, between 4-8.
 - The player cannot see where the computer ships are but can see their own ships.
 
-![Input]()
+![Input](https://github.com/Huddy2022/Ultimate-Battleships/blob/main/assets/images/Input.png)
 
 - Input validation and error checking
  - Must enter a number for board size and number of ships.
  - Cannot enter numbers outside the recommended range.
 
-![input_validator]()
+![input_validator](https://github.com/Huddy2022/Ultimate-Battleships/blob/main/assets/images/Input-Validator.png)
 
 - Play against a computer.
 - logs if you miss or hit as well as the computer.
@@ -44,14 +46,14 @@ Once all ships have been destoryed on either the players board or the computers 
 - Maintains scores during the game.
 - Maintains a overall game score, if user decides to have multiple games.
 
-![scores]()
+![scores](https://github.com/Huddy2022/Ultimate-Battleships/blob/main/assets/images/scores.png)
 
 - Input validation and error checking
  - Cannot enter coordinates outside the size of the board
  - You must enter numbers
  - Cannot enter the same guess twice
 
-![guess_validator]()
+![guess_validator](https://github.com/Huddy2022/Ultimate-Battleships/blob/main/assets/images/guess-validator.png)
 
 ## Future features
 
@@ -93,6 +95,8 @@ Solved Bugs:
  
  - PEP8
   - No errors were returned from the pep8ci.herokuapp.com
+
+![PEP8](https://github.com/Huddy2022/Ultimate-Battleships/blob/main/assets/images/CI_python_linter.png)
 
 ## Deployment
 
