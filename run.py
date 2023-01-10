@@ -128,7 +128,7 @@ def players_guess(size, hidden):
             print("-" * 35)
             row = int(input(f"Guess a row between 1 and {size}:\n"))
             if not (1 <= (row) <= size):
-                print("PLEASE ENTER A VALID ROW!")
+                print("PLEASE ENTER A VALID NUMBER!")
                 continue
         except ValueError:
             print("PLEASE ENTER A NUMBER")
@@ -137,7 +137,7 @@ def players_guess(size, hidden):
         try:
             column = int(input(f"Guess a column between 1 and {size}:\n"))
             if not (1 <= int(column) <= size):
-                print("PLEASE ENTER A VALID ROW!")
+                print("PLEASE ENTER A VALID NUMBER!")
                 continue
         except ValueError:
             print("PLEASE ENTER A NUMBER")
